@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emotion Detector</title>
+    <style>
+        body { background: #f4f7fb; font-family: Arial, sans-serif; margin: 0; }
+        main { background: white; border-radius: 12px; box-shadow: 0 8px 30px #0002;
+               margin: 10vh auto; max-width: 720px; padding: 40px; }
+        h1 { color: #17365d; }
+        textarea { box-sizing: border-box; font-size: 16px; min-height: 120px;
+                   padding: 12px; width: 100%; }
+        button { background: #0f62fe; border: 0; border-radius: 5px; color: white;
+                 cursor: pointer; font-size: 16px; margin-top: 14px; padding: 12px 22px; }
+        #result { background: #eef4ff; border-left: 4px solid #0f62fe;
+                  margin-top: 24px; min-height: 24px; padding: 16px; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Emotion Detector</h1>
+    <p>Enter a statement to identify its emotion scores and dominant emotion.</p>
+    <label for="textToAnalyze">Statement</label>
+    <textarea id="textToAnalyze" placeholder="I am glad this happened"></textarea>
+    <button type="button" onclick="runEmotionAnalysis()">Analyze emotion</button>
+    <div id="result" aria-live="polite">Your result will appear here.</div>
+</main>
+<script>
+    async function runEmotionAnalysis() {
+        const text = document.getElementById('textToAnalyze').value;
+        const response = await fetch(`/emotionDetector?textToAnalyze=${encodeURIComponent(text)}`);
+        document.getElementById('result').textContent = await response.text();
+    }
+</script>
+</body>
+</html>
