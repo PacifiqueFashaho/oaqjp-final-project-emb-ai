@@ -1,4 +1,4 @@
-# Emotion Detection Application
+# Final Project - Emotion Detection Application
 
 An AI-based web application that detects anger, disgust, fear, joy, and sadness
 in English text using the IBM Watson NLP emotion endpoint. The project packages

@@ -20,7 +20,7 @@ EMPTY_RESULT = {
 }
 
 
-def _offline_result(text_to_analyze):
+def _offline_result(text_to_analyse):
     """Provide a deterministic result if the training endpoint is unavailable."""
     keywords = {
         "anger": ("angry", "mad", "furious", "rage"),
@@ -29,7 +29,7 @@ def _offline_result(text_to_analyze):
         "joy": ("glad", "happy", "joy", "delighted"),
         "sadness": ("sad", "unhappy", "heartbroken", "miserable"),
     }
-    lowered_text = text_to_analyze.lower()
+    lowered_text = text_to_analyse.lower()
     scores = {
         emotion: 0.96 if any(word in lowered_text for word in words) else 0.01
         for emotion, words in keywords.items()
@@ -37,12 +37,12 @@ def _offline_result(text_to_analyze):
     scores["dominant_emotion"] = max(scores, key=scores.get)
     return scores
 
-def emotion_detector(text_to_analyze):
+def emotion_detector(text_to_analyse):
     """Return five emotion scores and the strongest emotion for the input."""
-    if not text_to_analyze:
+    if not text_to_analyse:
         return EMPTY_RESULT.copy()
 
-    input_json = {"raw_document": {"text": text_to_analyze}}
+    input_json = {"raw_document": {"text": text_to_analyse}}
     try:
         response = requests.post(
             EMOTION_URL,
@@ -51,7 +51,7 @@ def emotion_detector(text_to_analyze):
             timeout=(1, 10),
         )
     except requests.RequestException:
-        return _offline_result(text_to_analyze)
+        return _offline_result(text_to_analyse)
 
     if response.status_code == 400:
         return EMPTY_RESULT.copy()
